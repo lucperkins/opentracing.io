@@ -1,3 +1,5 @@
+{{- $languages := .Site.Data.languages.array }}
+{{- $communityLinks := .Site.Data.community }}
 <header class="header{{ if eq .Kind "home" }}--home{{ end }}">
   <div class="header__container">
     <div class="header__logo">
@@ -31,7 +33,7 @@
       <div class="dropdown">
         <a class="dropdown__button" href="https://github.com/opentracing">Github</a>
         <div class="dropdown__content language">
-          {{- range .Site.Data.language.array }}
+          {{- range $languages }}
           <a href="{{ .url }}">{{ .name }}</a>
           {{- end }}
           <hr/>
@@ -42,7 +44,7 @@
       <div class="dropdown no-link">
         <a class="dropdown__button">Community</a>
         <div class="dropdown__content docs">
-          {{- range .Site.Data.links.community }}
+          {{- range $communityLinks }}
           {{- if .url }}
           <a href="{{ .url }}">{{ .name }}</a>
           {{- else }}
@@ -92,13 +94,13 @@
       {{- end }}
 
       <h3>GitHub</h3>
-      {{- range .Site.Data.language.array }}
+      {{- range $languages }}
       <a href="{{ .url }}">{{ .name }}</a>
       {{- end }}
       <hr/>
 
       <h3>Community</h3>
-      {{- range .Site.Data.links.community }}
+      {{- range $communityLinks }}
       {{- if .url }}
       <a href="{{ .url }}">{{ .name }}</a>
       {{- else }}
