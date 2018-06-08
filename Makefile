@@ -4,7 +4,8 @@ THEME_DIR := themes/$(THEME)
 NODE_BIN := node_modules/.bin
 GULP := $(NODE_BIN)/gulp
 CONCURRENTLY := $(NODE_BIN)/concurrently
-NPM := $(shell bash -l -c "nvm use 2>&1 > /dev/null && which npm")
+#NPM := $(shell bash -l -c "nvm use 2>&1 > /dev/null && which npm")
+NPM := npm
 NETLIFY_URL = https://opentracing.netlify.com
 
 .PHONY: build
@@ -40,7 +41,7 @@ develop-assets:
 
 .PHONY: dev
 dev:
-	$(CONCURRENTLY) "make serve" "make develop-assets"
+	$(CONCURRENTLY) "make develop-assets" "make serve"
 
 .PHONY: get-spec-docs
 get-spec-docs:
@@ -48,7 +49,7 @@ get-spec-docs:
 
 .PHONY: setup
 setup: get-spec-docs netlify-setup
-	$(NPM_INSTALL)
+	$(NPM) install
 
 .PHONY: netlify-setup
 netlify-setup:
@@ -64,4 +65,4 @@ netlify-build: netlify-setup clean build-assets
 netlify-build-preview: netlify-setup clean build-assets
 	$(HUGO) \
 		--theme $(THEME) \
-		--baseURL $(DEPLOY_PRIME_URL)
+		--baseURL $(NETLIFY_URL)
